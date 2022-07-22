@@ -1,0 +1,46 @@
+<html>
+    <head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+    </style>
+    </head>
+    <body>
+        <h1>My Header</h1>
+        
+<table id="t1">
+    <tr>
+      <th>ID</th>
+      <th>Datum</th>
+      <th>Kategorie</th>
+      <th>Betrag</th>
+    </tr>
+  </table>
+    </body>   
+    <script>
+        async function loadData() {
+            const response = await fetch('/api');
+            const rows = await response.json();
+            for (let i = 0; i < rows.length; i++) {
+                document.getElementById("t1").innerHTML += '<tr><td>' + rows[i]["uniqe_key"] + '</td><td>' + 
+                    rows[i]["date"] + '</td><td>' + 
+                    rows[i]["category"] + '</td><td>' + 
+                    rows[i]["value"] + '</td></tr>';
+            }
+        }
+        loadData();
+    </script> 
+</html> 
