@@ -22,9 +22,9 @@ http.createServer(function (req, res) {
         con.query("SELECT * FROM _finance_data WHERE `date` LIKE '%" + param["datum"] + "%'", function (err, result, fields) {
             if (err) throw err;
             tmp = result;
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(tmp));
         });
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify(tmp));
     } 
     else{
         fs.readFile('page.html', function(err, data) {
