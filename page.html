@@ -21,7 +21,8 @@
 </head>
 <body>
     <h1>Überblick</h1>
-
+    <input type="text" id="datum" name="datum"><br><br>
+    <button onclick="loadData()">Laden</button> 
     <table id="t1">
         <tr>
             <th>ID</th>
@@ -33,8 +34,11 @@
 </body>
 <script>
     async function loadData() {
-        const response = await fetch('/api?datum=2022-07');
-        const rows = await response.json();
+        var date = document.getElementById("datum").value;
+        var url = "/api?datum=" + date;
+        var response = await fetch(url);
+        var rows = await response.json();
+        document.getElementById("t1").innerHTML = '';
         for (let i = 0; i < rows.length; i++) {
             document.getElementById("t1").innerHTML += '<tr><td>' + rows[i]["uniqe_key"] + '</td><td>' +
                 rows[i]["date"] + '</td><td>' +
@@ -42,7 +46,6 @@
                 rows[i]["value"] + '</td></tr>';
         }
     }
-    loadData();
 </script>
 
 </html>
