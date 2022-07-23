@@ -1,4 +1,6 @@
+<!DOCTYPE html>
 <html>
+
 <head>
     <style>
         table {
@@ -18,11 +20,27 @@
             background-color: #dddddd;
         }
     </style>
+    <script>
+        async function loadData() {
+            var date = document.getElementById("datum").value;
+            var url = "/api?datum=" + date;
+            var response = await fetch(url);
+            var rows = await response.json();
+            document.getElementById("t1").innerHTML = '';
+            for (let i = 0; i < rows.length; i++) {
+                document.getElementById("t1").innerHTML += '<tr><td>' + rows[i]["uniqe_key"] + '</td><td>' +
+                    rows[i]["date"] + '</td><td>' +
+                    rows[i]["category"] + '</td><td>' +
+                    rows[i]["value"] + '</td></tr>';
+            }
+        }
+    </script>
 </head>
+
 <body>
     <h1>Überblick</h1>
     <input type="text" id="datum" name="datum"><br><br>
-    <button onclick="loadData()">Laden</button> 
+    <button onclick="loadData()">Laden</button>
     <table id="t1">
         <tr>
             <th>ID</th>
@@ -32,20 +50,5 @@
         </tr>
     </table>
 </body>
-<script>
-    async function loadData() {
-        var date = document.getElementById("datum").value;
-        var url = "/api?datum=" + date;
-        var response = await fetch(url);
-        var rows = await response.json();
-        document.getElementById("t1").innerHTML = '';
-        for (let i = 0; i < rows.length; i++) {
-            document.getElementById("t1").innerHTML += '<tr><td>' + rows[i]["uniqe_key"] + '</td><td>' +
-                rows[i]["date"] + '</td><td>' +
-                rows[i]["category"] + '</td><td>' +
-                rows[i]["value"] + '</td></tr>';
-        }
-    }
-</script>
 
 </html>
